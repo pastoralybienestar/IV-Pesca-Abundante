@@ -6,8 +6,9 @@
     <title>Una Pesca Abundante - Sínodo 2024</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
     <style>
-        /* Estilos personalizados y Efecto Glassmorphism */
+        /* Fondo general */
         body {
             background-image: url('https://images.pexels.com/photos/29707030/pexels-photo-29707030.jpeg?auto=compress&cs=tinysrgb&w=1920');
             background-size: cover;
@@ -16,138 +17,222 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .glass {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        /* Glassmorphism Claro y Elegante */
+        .glass-light {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 100%);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
         }
 
+        /* Modal Oscuro */
         .glass-dark {
             background: rgba(15, 23, 42, 0.85);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .emoji-3d {
-            font-size: 4rem;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
-            transition: transform 0.3s ease;
+        /* Animación flotante para los emojis */
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .emoji-float {
+            display: inline-block;
+            animation: floatEmoji 3s ease-in-out infinite;
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2));
+        }
+        .delay-1 { animation-delay: 0s; }
+        .delay-2 { animation-delay: 0.7s; }
+        .delay-3 { animation-delay: 1.4s; }
+        .delay-4 { animation-delay: 2.1s; }
+
+        /* Efectos Hover para las tarjetas */
+        .card-hover:hover .emoji-float {
+            transform: scale(1.15) rotate(5deg) !important;
+            animation-play-state: paused;
+        }
+        .card-hover:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.5) 100%);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px 0 rgba(0, 100, 200, 0.2);
         }
 
-        .card-hover:hover .emoji-3d {
-            transform: scale(1.15) rotate(5deg);
-        }
-
+        /* Barra de scroll creativa clara (Exterior) */
         .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1); 
+            background: rgba(0, 0, 0, 0.05); 
             border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.5); 
+            background: linear-gradient(to bottom, #60a5fa, #06b6d4); 
             border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #3b82f6, #0891b2);
+        }
+
+        /* Barra de scroll creativa oscura (Para Modales) */
+        .custom-scrollbar-dark::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar-dark::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3b82f6, #06b6d4); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2563eb, #0891b2);
+        }
+
+        /* Sombras suaves para textos */
+        .text-shadow-light {
+            text-shadow: 0 2px 8px rgba(255,255,255,0.8);
+        }
+        .text-shadow-dark {
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6);
         }
     </style>
 </head>
 <body class="min-h-screen text-slate-800 antialiased relative">
 
-    <!-- Capa de superposición oscura para mejorar la lectura -->
-    <div class="absolute inset-0 bg-blue-900/40 z-0"></div>
+    <!-- Capa de superposición clara y colorida para dar vida -->
+    <div class="absolute inset-0 bg-gradient-to-br from-cyan-300/30 via-blue-400/20 to-indigo-500/30 z-0 pointer-events-none"></div>
 
     <div class="relative z-10 container mx-auto px-4 py-10 flex flex-col min-h-screen">
         
         <!-- Header -->
-        <header class="text-center mb-12 animate__animated animate__fadeInDown">
-            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-                <span class="emoji-3d inline-block text-5xl">🐟</span> Una Pesca Abundante
+        <header class="text-center mb-14 animate__animated animate__fadeInDown">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow-dark tracking-wide">
+                <span class="emoji-float text-5xl mr-3">🐟</span> Una Pesca Abundante
             </h1>
-            <p class="text-xl text-blue-100 max-w-3xl mx-auto glass px-6 py-3 rounded-full shadow-lg">
+            <!-- El texto inicial ahora tiene un fondo glass claro y texto oscuro para máxima legibilidad -->
+            <p class="text-lg md:text-xl text-slate-800 font-medium max-w-4xl mx-auto glass-light px-8 py-6 rounded-3xl leading-relaxed">
                 "Simón Pedro subió a la barca y arrastró hasta la orilla la red repleta de peces grandes... Y aunque eran tantos, no se rompió la red" (Jn 21,8.11).
-                <br><span class="text-sm font-semibold text-white">Parte IV - Documento Final del Sínodo 2024</span>
+                <br>
+                <span class="inline-block mt-4 px-5 py-1.5 bg-blue-600 rounded-full text-sm font-bold text-white uppercase tracking-wider shadow-md">
+                    Parte IV - Documento Final del Sínodo 2024
+                </span>
             </p>
         </header>
 
         <!-- Contenedor Principal (Grid de Tarjetas) -->
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 flex-grow animate__animated animate__fadeInUp">
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 flex-grow animate__animated animate__fadeInUp">
             
             <!-- Tarjeta 1 -->
-            <button onclick="openModal('modal1')" class="card-hover glass rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center transition-all duration-300 hover:bg-white/40 hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://images.pexels.com/photos/9912132/pexels-photo-9912132.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0"></div>
-                <div class="relative z-10">
-                    <div class="emoji-3d mb-4">🌍</div>
-                    <h2 class="text-2xl font-bold text-blue-900 mb-2">Arraigado y Peregrino</h2>
-                    <p class="text-slate-800 font-medium line-clamp-3">La Iglesia local frente a los cambios geográficos, la migración y la cultura digital...</p>
-                    <span class="mt-4 inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow group-hover:bg-blue-700 transition">Explorar ➔</span>
+            <button onclick="openModal('modal1')" class="card-hover glass-light rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center group relative overflow-hidden">
+                <!-- Imagen de fondo de la tarjeta sutil -->
+                <div class="absolute inset-0 opacity-20 group-hover:opacity-30 bg-[url('https://images.pexels.com/photos/9912132/pexels-photo-9912132.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0 transition-opacity duration-400"></div>
+                <div class="relative z-10 w-full flex flex-col h-full justify-between items-center">
+                    <div>
+                        <div class="emoji-float delay-1 text-5xl mb-4">🌍</div>
+                        <h2 class="text-2xl font-extrabold text-blue-950 mb-3 text-shadow-light">Arraigado y Peregrino</h2>
+                        <p class="text-slate-900 font-bold line-clamp-3 text-base leading-relaxed drop-shadow-sm">La Iglesia local frente a los cambios geográficos, la migración y la cultura digital...</p>
+                    </div>
+                    <span class="mt-6 inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 group-hover:shadow-cyan-400/50 group-hover:scale-105 transition-all">Explorar ➔</span>
                 </div>
             </button>
 
             <!-- Tarjeta 2 -->
-            <button onclick="openModal('modal2')" class="card-hover glass rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center transition-all duration-300 hover:bg-white/40 hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://images.pexels.com/photos/23020429/pexels-photo-23020429.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0"></div>
-                <div class="relative z-10">
-                    <div class="emoji-3d mb-4">🎁</div>
-                    <h2 class="text-2xl font-bold text-blue-900 mb-2">Intercambio de Dones</h2>
-                    <p class="text-slate-800 font-medium line-clamp-3">Compartir carismas, ecumenismo y la riqueza entre Iglesias pobres y ricas...</p>
-                    <span class="mt-4 inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow group-hover:bg-blue-700 transition">Explorar ➔</span>
+            <button onclick="openModal('modal2')" class="card-hover glass-light rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center group relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 group-hover:opacity-30 bg-[url('https://images.pexels.com/photos/23020429/pexels-photo-23020429.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0 transition-opacity duration-400"></div>
+                <div class="relative z-10 w-full flex flex-col h-full justify-between items-center">
+                    <div>
+                        <div class="emoji-float delay-2 text-5xl mb-4">🎁</div>
+                        <h2 class="text-2xl font-extrabold text-blue-950 mb-3 text-shadow-light">Intercambio de Dones</h2>
+                        <p class="text-slate-900 font-bold line-clamp-3 text-base leading-relaxed drop-shadow-sm">Compartir carismas, ecumenismo y la riqueza entre Iglesias pobres y ricas...</p>
+                    </div>
+                    <span class="mt-6 inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 group-hover:shadow-cyan-400/50 group-hover:scale-105 transition-all">Explorar ➔</span>
                 </div>
             </button>
 
             <!-- Tarjeta 3 -->
-            <button onclick="openModal('modal3')" class="card-hover glass rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center transition-all duration-300 hover:bg-white/40 hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://images.pexels.com/photos/38925373/pexels-photo-38925373.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0"></div>
-                <div class="relative z-10">
-                    <div class="emoji-3d mb-4">🤝</div>
-                    <h2 class="text-2xl font-bold text-blue-900 mb-2">Vínculos para la Unidad</h2>
-                    <p class="text-slate-800 font-medium line-clamp-3">Conferencias Episcopales, Asambleas Eclesiales y una descentralización saludable...</p>
-                    <span class="mt-4 inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow group-hover:bg-blue-700 transition">Explorar ➔</span>
+            <button onclick="openModal('modal3')" class="card-hover glass-light rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center group relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 group-hover:opacity-30 bg-[url('https://images.pexels.com/photos/38925373/pexels-photo-38925373.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0 transition-opacity duration-400"></div>
+                <div class="relative z-10 w-full flex flex-col h-full justify-between items-center">
+                    <div>
+                        <div class="emoji-float delay-3 text-5xl mb-4">🤝</div>
+                        <h2 class="text-2xl font-extrabold text-blue-950 mb-3 text-shadow-light">Vínculos para la Unidad</h2>
+                        <p class="text-slate-900 font-bold line-clamp-3 text-base leading-relaxed drop-shadow-sm">Conferencias Episcopales, Asambleas Eclesiales y una descentralización saludable...</p>
+                    </div>
+                    <span class="mt-6 inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 group-hover:shadow-cyan-400/50 group-hover:scale-105 transition-all">Explorar ➔</span>
                 </div>
             </button>
 
             <!-- Tarjeta 4 -->
-            <button onclick="openModal('modal4')" class="card-hover glass rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center transition-all duration-300 hover:bg-white/40 hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10 bg-[url('https://images.pexels.com/photos/38495352/pexels-photo-38495352.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0"></div>
-                <div class="relative z-10">
-                    <div class="emoji-3d mb-4">🗝️</div>
-                    <h2 class="text-2xl font-bold text-blue-900 mb-2">Servicio del Obispo de Roma</h2>
-                    <p class="text-slate-800 font-medium line-clamp-3">El Papa como garante de la sinodalidad, Iglesias Orientales y el Primado Ecuménico...</p>
-                    <span class="mt-4 inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow group-hover:bg-blue-700 transition">Explorar ➔</span>
+            <button onclick="openModal('modal4')" class="card-hover glass-light rounded-3xl p-6 text-left flex flex-col items-center justify-center text-center group relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 group-hover:opacity-30 bg-[url('https://images.pexels.com/photos/38495352/pexels-photo-38495352.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center z-0 transition-opacity duration-400"></div>
+                <div class="relative z-10 w-full flex flex-col h-full justify-between items-center">
+                    <div>
+                        <div class="emoji-float delay-4 text-5xl mb-4">🗝️</div>
+                        <h2 class="text-2xl font-extrabold text-blue-950 mb-3 text-shadow-light">Servicio del Obispo</h2>
+                        <p class="text-slate-900 font-bold line-clamp-3 text-base leading-relaxed drop-shadow-sm">El Papa como garante de la sinodalidad, Iglesias Orientales y el Primado Ecuménico...</p>
+                    </div>
+                    <span class="mt-6 inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-500/30 group-hover:shadow-cyan-400/50 group-hover:scale-105 transition-all">Explorar ➔</span>
                 </div>
             </button>
 
         </main>
 
         <!-- Footer -->
-        <footer class="mt-12 text-center text-white/80 animate__animated animate__fadeIn">
+        <footer class="mt-14 text-center text-white font-medium drop-shadow-md animate__animated animate__fadeIn">
             <p>Sínodo 2021-2024: Por una Iglesia sinodal: comunión, participación y misión.</p>
         </footer>
     </div>
 
-    <!-- MODALES (Ventanas emergentes) -->
+    <!-- MODALES (Ventanas emergentes con Banners e Información Completa) -->
 
     <!-- Modal 1: Arraigado y Peregrino -->
     <div id="modal1" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('modal1')"></div>
-        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
-            <button onclick="closeModal('modal1')" class="absolute top-4 right-4 text-white hover:text-red-400 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center transition z-20">✕</button>
-            <div class="p-8 overflow-y-auto custom-scrollbar text-gray-200">
-                <div class="flex items-center gap-4 mb-6 border-b border-white/20 pb-4">
-                    <span class="emoji-3d text-5xl">🌍</span>
-                    <h2 class="text-3xl font-bold text-white">Arraigado y Peregrino</h2>
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal('modal1')"></div>
+        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
+            <button onclick="closeModal('modal1')" class="absolute top-4 right-4 bg-white/10 text-white hover:bg-red-500 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition z-20 shadow-sm backdrop-blur-md">✕</button>
+            
+            <!-- Banner Superior -->
+            <div class="w-full h-48 sm:h-56 bg-cover bg-center relative shrink-0" style="background-image: url('https://images.pexels.com/photos/9912132/pexels-photo-9912132.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/40 to-transparent"></div>
+                <div class="absolute bottom-4 left-6 sm:left-8 flex items-center gap-4 z-10">
+                    <span class="text-5xl drop-shadow-sm">🌍</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Arraigado y Peregrino</h2>
                 </div>
-                <div class="space-y-4 text-lg">
-                    <p>La Iglesia local experimenta profundos cambios socioculturales que modifican la percepción del "lugar" (<span class="text-blue-300 font-bold">Párrafos 110-119</span>):</p>
-                    <ul class="list-disc pl-6 space-y-3">
-                        <li><span class="text-xl">🏙️</span> <strong>Urbanización:</strong> Las grandes ciudades suelen ser aglomeraciones anónimas. La Iglesia debe reconstruir la vida comunitaria y tejer relaciones fraternas, sin descuidar las áreas rurales y periféricas.</li>
-                        <li><span class="text-xl">🚶</span> <strong>Migración:</strong> El aumento de la movilidad humana crea comunidades multiculturales. Surge el desafío de acoger a quienes llegan y mantener vínculos de quienes están en la diáspora (especialmente relevante para las Iglesias Orientales).</li>
-                        <li><span class="text-xl">📱</span> <strong>Cultura Digital:</strong> La red reconfigura las relaciones. La Iglesia debe dedicar recursos para que el ambiente digital sea un lugar profético, construyendo comunidades digitales de inspiración cristiana.</li>
-                        <li><span class="text-xl">🏠</span> <strong>La Iglesia como Casa:</strong> No es un espacio cerrado, sino un lugar de acogida, hospitalidad e inclusión para todos los peregrinos de la esperanza.</li>
-                        <li><span class="text-xl">⛪</span> <strong>Renovación Parroquial:</strong> La parroquia no debe centrarse en sí misma, sino abrirse a formas inéditas de acción pastoral adaptadas a la movilidad de las personas y su "territorio existencial".</li>
+            </div>
+
+            <!-- Contenido del Modal -->
+            <div class="p-6 sm:p-8 pt-2 overflow-y-auto custom-scrollbar-dark text-gray-200">
+                <div class="space-y-5 text-base sm:text-lg">
+                    <p class="text-cyan-400 font-medium">La Iglesia local experimenta profundos cambios socioculturales que modifican la percepción del "lugar" (<span class="font-bold text-white">Párrafos 110-119</span>):</p>
+                    <ul class="list-none space-y-5 mt-4">
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🏙️</span> 
+                            <div><strong class="text-white">Urbanización:</strong> Las grandes ciudades suelen ser aglomeraciones anónimas. La Iglesia debe reconstruir la vida comunitaria y tejer relaciones fraternas, sin descuidar las áreas rurales y periféricas.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🚶</span> 
+                            <div><strong class="text-white">Migración:</strong> El aumento de la movilidad humana crea comunidades multiculturales. Surge el desafío de acoger a quienes llegan y mantener vínculos de quienes están en la diáspora (especialmente relevante para las Iglesias Orientales).</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">📱</span> 
+                            <div><strong class="text-white">Cultura Digital:</strong> La red reconfigura las relaciones. La Iglesia debe dedicar recursos para que el ambiente digital sea un lugar profético, construyendo comunidades digitales de inspiración cristiana.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🏠</span> 
+                            <div><strong class="text-white">La Iglesia como Casa:</strong> No es un espacio cerrado, sino un lugar de acogida, hospitalidad e inclusión para todos los peregrinos de la esperanza.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">⛪</span> 
+                            <div><strong class="text-white">Renovación Parroquial:</strong> La parroquia no debe centrarse en sí misma, sino abrirse a formas inéditas de acción pastoral adaptadas a la movilidad de las personas y su "territorio existencial".</div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -156,21 +241,38 @@
 
     <!-- Modal 2: Intercambio de Dones -->
     <div id="modal2" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('modal2')"></div>
-        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
-            <button onclick="closeModal('modal2')" class="absolute top-4 right-4 text-white hover:text-red-400 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center transition z-20">✕</button>
-            <div class="p-8 overflow-y-auto custom-scrollbar text-gray-200">
-                <div class="flex items-center gap-4 mb-6 border-b border-white/20 pb-4">
-                    <span class="emoji-3d text-5xl">🎁</span>
-                    <h2 class="text-3xl font-bold text-white">Intercambio de Dones</h2>
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal('modal2')"></div>
+        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
+            <button onclick="closeModal('modal2')" class="absolute top-4 right-4 bg-white/10 text-white hover:bg-red-500 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition z-20 shadow-sm backdrop-blur-md">✕</button>
+            
+            <div class="w-full h-48 sm:h-56 bg-cover bg-center relative shrink-0" style="background-image: url('https://images.pexels.com/photos/23020429/pexels-photo-23020429.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/60 to-transparent"></div>
+                <div class="absolute bottom-4 left-6 sm:left-8 flex items-center gap-4 z-10">
+                    <span class="text-5xl drop-shadow-sm">🎁</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Intercambio de Dones</h2>
                 </div>
-                <div class="space-y-4 text-lg">
-                    <p>El intercambio de dones es el signo eficaz del amor y misericordia de Dios (<span class="text-blue-300 font-bold">Párrafos 120-123</span>):</p>
-                    <ul class="list-disc pl-6 space-y-3">
-                        <li><span class="text-xl">🤝</span> <strong>Solidaridad sin paternalismo:</strong> Los bienes de cada Iglesia deben compartirse respetando identidades. Los sacerdotes "fidei donum" deben ser un recurso de crecimiento, no solo un remedio funcional. La ayuda económica no debe degenerar en asistencialismo.</li>
-                        <li><span class="text-xl">🕊️</span> <strong>Dimensión Ecuménica:</strong> El intercambio de riquezas espirituales, teológicas y caritativas con otras tradiciones cristianas. El ejemplo de santos y mártires de otras Iglesias es un don que podemos recibir (ecumenismo de la sangre).</li>
-                        <li><span class="text-xl">🗣️</span> <strong>Diálogo Interreligioso:</strong> Caminar junto a creyentes de otras religiones compartiendo valores, construyendo justicia, fraternidad y paz, a través del "diálogo de vida, de acción y de oración".</li>
-                        <li><span class="text-xl">🌿</span> <strong>Zonas Supranacionales:</strong> Compromisos coordinados en grandes áreas como la Amazonía o el Mediterráneo para buscar el bien común.</li>
+            </div>
+
+            <div class="p-6 sm:p-8 pt-2 overflow-y-auto custom-scrollbar-dark text-gray-200">
+                <div class="space-y-5 text-base sm:text-lg">
+                    <p class="text-cyan-400 font-medium">El intercambio de dones es el signo eficaz del amor y misericordia de Dios (<span class="font-bold text-white">Párrafos 120-123</span>):</p>
+                    <ul class="list-none space-y-5 mt-4">
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🤝</span> 
+                            <div><strong class="text-white">Solidaridad sin paternalismo:</strong> Los bienes de cada Iglesia deben compartirse respetando identidades. Los sacerdotes "fidei donum" deben ser un recurso de crecimiento, no solo un remedio funcional. La ayuda económica no debe degenerar en asistencialismo.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🕊️</span> 
+                            <div><strong class="text-white">Dimensión Ecuménica:</strong> El intercambio de riquezas espirituales, teológicas y caritativas con otras tradiciones cristianas. El ejemplo de santos y mártires de otras Iglesias es un don que podemos recibir (ecumenismo de la sangre).</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🗣️</span> 
+                            <div><strong class="text-white">Diálogo Interreligioso:</strong> Caminar junto a creyentes de otras religiones compartiendo valores, construyendo justicia, fraternidad y paz, a través del "diálogo de vida, de acción y de oración".</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🌿</span> 
+                            <div><strong class="text-white">Zonas Supranacionales:</strong> Compromisos coordinados en grandes áreas como la Amazonía o el Mediterráneo para buscar el bien común.</div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -179,21 +281,38 @@
 
     <!-- Modal 3: Vínculos para la Unidad -->
     <div id="modal3" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('modal3')"></div>
-        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
-            <button onclick="closeModal('modal3')" class="absolute top-4 right-4 text-white hover:text-red-400 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center transition z-20">✕</button>
-            <div class="p-8 overflow-y-auto custom-scrollbar text-gray-200">
-                <div class="flex items-center gap-4 mb-6 border-b border-white/20 pb-4">
-                    <span class="emoji-3d text-5xl">🤝</span>
-                    <h2 class="text-3xl font-bold text-white">Vínculos para la Unidad</h2>
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal('modal3')"></div>
+        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
+            <button onclick="closeModal('modal3')" class="absolute top-4 right-4 bg-white/10 text-white hover:bg-red-500 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition z-20 shadow-sm backdrop-blur-md">✕</button>
+            
+            <div class="w-full h-48 sm:h-56 bg-cover bg-center relative shrink-0" style="background-image: url('https://images.pexels.com/photos/38925373/pexels-photo-38925373.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/60 to-transparent"></div>
+                <div class="absolute bottom-4 left-6 sm:left-8 flex items-center gap-4 z-10">
+                    <span class="text-5xl drop-shadow-sm">🤝</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Vínculos para la Unidad</h2>
                 </div>
-                <div class="space-y-4 text-lg">
-                    <p>Adoptar un estilo sinodal permite a las Iglesias moverse a ritmos diferentes, como expresión de una diversidad legítima (<span class="text-blue-300 font-bold">Párrafos 124-129</span>):</p>
-                    <ul class="list-disc pl-6 space-y-3">
-                        <li><span class="text-xl">👥</span> <strong>Conferencias Episcopales:</strong> Se propone clarificar su estatuto teológico y jurídico, y precisar su competencia doctrinal y disciplinar para inculturar la fe sin poner en riesgo la unidad.</li>
-                        <li><span class="text-xl">🌐</span> <strong>Asambleas Eclesiales Continentales:</strong> La experiencia de 2023 fue una novedad significativa. Se debe clarificar su estatuto y alentar su continuidad como espacios para articular la participación del Pueblo de Dios.</li>
-                        <li><span class="text-xl">⚖️</span> <strong>Descentralización Saludable:</strong> Revalorizar los Concilios particulares (provinciales y plenarios). Reformar el procedimiento de reconocimiento ("recognitio") de la Santa Sede introduciendo, para temas pastorales, el consentimiento tácito.</li>
-                        <li><span class="text-xl">🕊️</span> <strong>Apoyo en dificultades:</strong> La Santa Sede ayudará a las Conferencias Episcopales que, por situaciones sociopolíticas, tengan dificultades para participar en asambleas internacionales.</li>
+            </div>
+
+            <div class="p-6 sm:p-8 pt-2 overflow-y-auto custom-scrollbar-dark text-gray-200">
+                <div class="space-y-5 text-base sm:text-lg">
+                    <p class="text-cyan-400 font-medium">Adoptar un estilo sinodal permite a las Iglesias moverse a ritmos diferentes, como expresión de una diversidad legítima (<span class="font-bold text-white">Párrafos 124-129</span>):</p>
+                    <ul class="list-none space-y-5 mt-4">
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">👥</span> 
+                            <div><strong class="text-white">Conferencias Episcopales:</strong> Se propone clarificar su estatuto teológico y jurídico, y precisar su competencia doctrinal y disciplinar para inculturar la fe sin poner en riesgo la unidad.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🌐</span> 
+                            <div><strong class="text-white">Asambleas Eclesiales Continentales:</strong> La experiencia de 2023 fue una novedad significativa. Se debe clarificar su estatuto y alentar su continuidad como espacios para articular la participación del Pueblo de Dios.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">⚖️</span> 
+                            <div><strong class="text-white">Descentralización Saludable:</strong> Revalorizar los Concilios particulares (provinciales y plenarios). Reformar el procedimiento de reconocimiento ("recognitio") de la Santa Sede introduciendo, para temas pastorales, el consentimiento tácito.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🕊️</span> 
+                            <div><strong class="text-white">Apoyo en dificultades:</strong> La Santa Sede ayudará a las Conferencias Episcopales que, por situaciones sociopolíticas, tengan dificultades para participar en asambleas internacionales.</div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -202,21 +321,38 @@
 
     <!-- Modal 4: Servicio del Obispo de Roma -->
     <div id="modal4" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal('modal4')"></div>
-        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
-            <button onclick="closeModal('modal4')" class="absolute top-4 right-4 text-white hover:text-red-400 bg-white/10 rounded-full w-10 h-10 flex items-center justify-center transition z-20">✕</button>
-            <div class="p-8 overflow-y-auto custom-scrollbar text-gray-200">
-                <div class="flex items-center gap-4 mb-6 border-b border-white/20 pb-4">
-                    <span class="emoji-3d text-5xl">🗝️</span>
-                    <h2 class="text-3xl font-bold text-white">El Servicio del Obispo de Roma</h2>
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onclick="closeModal('modal4')"></div>
+        <div class="glass-dark w-full max-w-4xl max-h-[90vh] rounded-3xl relative flex flex-col overflow-hidden animate__animated animate__zoomIn animate__faster">
+            <button onclick="closeModal('modal4')" class="absolute top-4 right-4 bg-white/10 text-white hover:bg-red-500 hover:text-white rounded-full w-10 h-10 flex items-center justify-center transition z-20 shadow-sm backdrop-blur-md">✕</button>
+            
+            <div class="w-full h-48 sm:h-56 bg-cover bg-center relative shrink-0" style="background-image: url('https://images.pexels.com/photos/38495352/pexels-photo-38495352.jpeg?auto=compress&cs=tinysrgb&w=1200');">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/60 to-transparent"></div>
+                <div class="absolute bottom-4 left-6 sm:left-8 flex items-center gap-4 z-10">
+                    <span class="text-5xl drop-shadow-sm">🗝️</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Servicio del Obispo de Roma</h2>
                 </div>
-                <div class="space-y-4 text-lg">
-                    <p>El Papa es garante de la sinodalidad, principio y fundamento de unidad en la diversidad (<span class="text-blue-300 font-bold">Párrafos 130-139</span>):</p>
-                    <ul class="list-disc pl-6 space-y-3">
-                        <li><span class="text-xl">☦️</span> <strong>Iglesias Orientales Católicas:</strong> Se propone instituir un Consejo de Patriarcas presidido por el Papa, y celebrar un Sínodo especial para promover el renacimiento de estas Iglesias y cuidar a sus fieles en la diáspora.</li>
-                        <li><span class="text-xl">🏛️</span> <strong>Curia Romana:</strong> En base a "Praedicate Evangelium", la Curia está al servicio del Papa y los obispos. Se exhorta a consultas previas antes de documentos normativos y formas de evaluación de su trabajo y de los Nuncios.</li>
-                        <li><span class="text-xl">🔄</span> <strong>Sínodo como Proceso:</strong> El Sínodo pasó de ser un evento a un "proceso eclesial" (Episcopalis communio) que involucra a todo el Pueblo de Dios (todos), al Colegio Episcopal (algunos) y al Papa (uno).</li>
-                        <li><span class="text-xl">✝️</span> <strong>Primado y Ecumenismo:</strong> El desafío de encontrar un ejercicio del primado que abra caminos al diálogo ecuménico. Se espera celebrar en 2025 el 1700 aniversario de Nicea con iniciativas como una fecha común para la Pascua.</li>
+            </div>
+
+            <div class="p-6 sm:p-8 pt-2 overflow-y-auto custom-scrollbar-dark text-gray-200">
+                <div class="space-y-5 text-base sm:text-lg">
+                    <p class="text-cyan-400 font-medium">El Papa es garante de la sinodalidad, principio y fundamento de unidad en la diversidad (<span class="font-bold text-white">Párrafos 130-139</span>):</p>
+                    <ul class="list-none space-y-5 mt-4">
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">☦️</span> 
+                            <div><strong class="text-white">Iglesias Orientales Católicas:</strong> Se propone instituir un Consejo de Patriarcas presidido por el Papa, y celebrar un Sínodo especial para promover el renacimiento de estas Iglesias y cuidar a sus fieles en la diáspora.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🏛️</span> 
+                            <div><strong class="text-white">Curia Romana:</strong> En base a "Praedicate Evangelium", la Curia está al servicio del Papa y los obispos. Se exhorta a consultas previas antes de documentos normativos y formas de evaluación de su trabajo y de los Nuncios.</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">🔄</span> 
+                            <div><strong class="text-white">Sínodo como Proceso:</strong> El Sínodo pasó de ser un evento a un "proceso eclesial" (Episcopalis communio) que involucra a todo el Pueblo de Dios (todos), al Colegio Episcopal (algunos) y al Papa (uno).</div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <span class="text-2xl">✝️</span> 
+                            <div><strong class="text-white">Primado y Ecumenismo:</strong> El desafío de encontrar un ejercicio del primado que abra caminos al diálogo ecuménico. Se espera celebrar en 2025 el 1700 aniversario de Nicea con iniciativas como una fecha común para la Pascua.</div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -228,13 +364,11 @@
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.classList.remove('hidden');
-            // Prevenir scroll en el body
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(modalId) {
             const modal = document.getElementById(modalId);
-            // Pequeña animación de salida opcional antes de ocultar
             modal.children[1].classList.remove('animate__zoomIn');
             modal.children[1].classList.add('animate__zoomOut');
             
@@ -243,7 +377,7 @@
                 modal.children[1].classList.remove('animate__zoomOut');
                 modal.children[1].classList.add('animate__zoomIn');
                 document.body.style.overflow = 'auto';
-            }, 200); // 200ms espera
+            }, 200); 
         }
 
         // Cerrar con la tecla ESC
